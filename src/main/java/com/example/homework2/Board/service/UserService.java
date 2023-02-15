@@ -82,8 +82,6 @@ public class UserService {
                             .build());
         }
 
-
-
         HttpHeaders headers = new HttpHeaders();
         headers.set(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.get().getUsername()));
         return ResponseEntity.ok()      //  status -> ok

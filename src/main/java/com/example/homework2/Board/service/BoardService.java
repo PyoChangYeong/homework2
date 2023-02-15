@@ -11,13 +11,11 @@ import com.example.homework2.Board.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,20 +27,32 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
+    
+    
+    
+    //          게시글 전체 목록 조회
+    public List<BoardResponseDto> getBoard(){
+        return boardRepository.findAllByOrderByModifiedAtDesc().stream().map(BoardResponseDto::new).toList();
+    };
 
 
     //          게시글 전체 목록 조회
-    @Transactional(readOnly = true)
-    public List<BoardResponseDto> getBoard() {
-//        List<Board> boards = boardRepository.findAll().stream().map(BoardResponseDto::new).toList();
+//    @Transactional(readOnly = true)
+//    public List<BoardResponseDto> getBoard() {
+//        List<Board> boards = getBoardRepository().findAllByOrderByModifiedAtDesc();
 //        List<BoardResponseDto> boardResponseDtos = new ArrayList<>();
 //        for (Board bo : boards) {
 //            boardResponseDtos.add(new BoardResponseDto(bo));
 //        }
-        return boardRepository.findAllByOrderByModifiedAtDesc().stream().map(BoardResponseDto::new).toList();
+//        return boardRepository.findAllByOrderByModifiedAtDesc().stream().map(BoardResponseDto::new).toList();
 //                  toList() : ArrayList() 사용 시 스트림으로 변환할 때 사용
 
-    }
+//    }
+
+//    private List<Board> getBoards() {
+//        List<Board> boards = boardRepository.findAll().stream().map(BoardResponseDto::new).toList();
+//        return boards;
+//    }
 
 
     //            게시글 작성
@@ -127,7 +137,7 @@ public class BoardService {
     }
 
 
-    public ResponseEntity deletePost(Long id, HttpServletRequest request) {
+    public ResponseEntity<?> deletePost(Long id, HttpServletRequest request) {
 
 
         // Request에서 Token 가져오기

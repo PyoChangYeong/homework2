@@ -3,7 +3,6 @@ package com.example.homework2.Board.controller;
 
 import com.example.homework2.Board.dto.MegResponseDto;
 import com.example.homework2.Board.dto.UserRequestDto;
-import com.example.homework2.Board.entity.User;
 import com.example.homework2.Board.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/user")
+@RequestMapping("/api/Board")
 public class UserController {
 
     private final UserService userService;

@@ -20,8 +20,8 @@ public class BoardController {
 
 //                      게시글 전체 목록 조회
     @GetMapping("/api/Board")
-    public List<Board> getPosts(){
-        return getPosts();
+    public List<BoardResponseDto> getBoard(){
+        return boardService.getBoard();
     }
 
 //                      게시글 작성
@@ -45,7 +45,7 @@ public class BoardController {
 
 //                      선택된 게시글 삭제
     @DeleteMapping("/api/Board/{id}")
-    public ResponseEntity deletePost(Long id, HttpServletRequest request){
+    public ResponseEntity<?> deletePost(Long id, HttpServletRequest request){
         return boardService.deletePost(id, request);
     }
 
