@@ -4,6 +4,7 @@ package com.example.homework2.Board.service;
 import com.example.homework2.Board.dto.MegResponseDto;
 import com.example.homework2.Board.dto.UserRequestDto;
 import com.example.homework2.Board.entity.User;
+import com.example.homework2.Board.entity.UserRoleEnum;
 import com.example.homework2.Board.jwt.JwtUtil;
 import com.example.homework2.Board.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,10 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
+
+    private static final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
+
+
 @Transactional
     public ResponseEntity<MegResponseDto> signup(UserRequestDto userRequestDto, BindingResult result) {
         String username = userRequestDto.getUsername();
@@ -46,10 +51,20 @@ public class UserService {
                             .build());
         }
 
+        //      사용자 ROLE 확인
+        UserRoleEnum role = UserRoleEnum.USER;
+        if(userRequestDto.isAdmin()){
+          if(!userRequestDto.getAdminToken().equals(ADMIN_TOKEN)){
+               throw new IllegalArgumentException("관리자 암호가 틀려 등록이 불가합니다.");
+         }
+          role = UserRoleEnum.ADMIN;
+    }
+
         // 입력한 username, password 로 user 객체 만들어 repository 에 저장
         userRepository.save(User.builder()
                 .username(username)
                 .password(password)
+                .role(role)
                 .build());
 
         return ResponseEntity.ok(MegResponseDto.builder()   // status : ok

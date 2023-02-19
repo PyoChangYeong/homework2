@@ -30,6 +30,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     List<Board> posts = new ArrayList<>();
 
-
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private UserRoleEnum role;
 
 }

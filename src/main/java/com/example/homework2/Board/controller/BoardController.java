@@ -3,6 +3,7 @@ package com.example.homework2.Board.controller;
 
 import com.example.homework2.Board.dto.BoardRequestDto;
 import com.example.homework2.Board.dto.BoardResponseDto;
+import com.example.homework2.Board.dto.MegResponseDto;
 import com.example.homework2.Board.entity.Board;
 import com.example.homework2.Board.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -38,14 +39,14 @@ public class BoardController {
 
 //                      선택된 게시글 수정
     @PutMapping("/api/Board/{id}")
-    public BoardResponseDto updatePost(@PathVariable Long id, @RequestBody BoardRequestDto requestDto, HttpServletRequest request){
+    public ResponseEntity<MegResponseDto> updatePost(@PathVariable Long id, @RequestBody BoardRequestDto requestDto, HttpServletRequest request){
         return boardService.updatePost(id, requestDto, request);
     }
 
 
 //                      선택된 게시글 삭제
     @DeleteMapping("/api/Board/{id}")
-    public ResponseEntity<?> deletePost(Long id, HttpServletRequest request){
+    public ResponseEntity<MegResponseDto> deletePost(@PathVariable Long id, HttpServletRequest request){
         return boardService.deletePost(id, request);
     }
 
